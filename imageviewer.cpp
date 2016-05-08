@@ -8,7 +8,7 @@
 ImageViewer::ImageViewer()
 {
     setAttribute(Qt::WA_AcceptTouchEvents);
-    imageLabel = new QLabel;
+    imageLabel = new ClickableLabel;
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
@@ -22,9 +22,31 @@ ImageViewer::ImageViewer()
     createMenus();
 
     resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
+    connect(imageLabel, SIGNAL(clicked()), this, SLOT(onclicked()));
 }
 
-void ImageViewer::mousePressEvent(QMouseEvent * event){
+void ImageViewer::onclicked(){
+    qDebug() << imageLabel->x;
+    qDebug() << imageLabel->y;
+    qDebug() << imageLabel->ev->x();
+    qDebug() << imageLabel->ev->y();
+    /*
+    if (global_counter == 5){
+        xx = imageLabel->ev->x();
+        yy = imageLabel->ev->y();
+        global_counter++;
+    }else{
+        save_field(&original, xx, yy, 48, 48);
+        global_counter = 0;
+    }
+    */
+    xx = imageLabel->ev->x();
+    yy = imageLabel->ev->y();
+    save_field(&original, xx, yy, 48, 48);
+
+}
+
+/*void ImageViewer::mousePressEvent(QMouseEvent * event){
     qDebug()<< event->type();
     if (event->type() == QEvent::MouseButtonPress)
     {
@@ -39,11 +61,16 @@ void ImageViewer::mousePressEvent(QMouseEvent * event){
         qDebug() << event->localPos();
     }
 }
+*/
 
 void ImageViewer::save_field(QPixmap *pixmap, int x1, int y1, int x2, int y2){
     QPixmap field;
     field = pixmap->copy(x1, y1, x2, y2);
-    field.save("cropped_image4.jpg");
+    field = field.scaled(48, 48,  Qt::IgnoreAspectRatio);
+    QString s = QString::number(kol_photo);
+    s = "imgfal" + s + ".jpg";
+    field.save(s);
+    kol_photo++;
 
 }
 

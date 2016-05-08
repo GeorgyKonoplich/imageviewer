@@ -5,6 +5,7 @@
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #include <QTouchEvent>
+#include "clickablelabel.h"
 
 #endif
 
@@ -25,7 +26,7 @@ public:
     bool loadFile(const QString &);
 
 protected:
-    void mousePressEvent(QMouseEvent * event);
+    //void mousePressEvent(QMouseEvent * event);
 private slots:
     void open();
     void print();
@@ -34,6 +35,7 @@ private slots:
     void normalSize();
     void fitToWindow();
     void about();
+    void onclicked();
 
 private:
     void save_field(QPixmap *pixmap, int x1, int y1, int x2, int y2);
@@ -44,10 +46,12 @@ private:
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
     int global_counter = 0;
-    QLabel *imageLabel;
+    int kol_photo = 0;
+    ClickableLabel *imageLabel;
     QScrollArea *scrollArea;
     QPixmap original;
-    QPointF coordinates[4];
+    int xx;
+    int yy;
     double scaleFactor;
 
 #ifndef QT_NO_PRINTER
