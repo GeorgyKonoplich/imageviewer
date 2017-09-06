@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QRubberBand>
 
 class ClickableLabel : public QLabel
 {
@@ -15,9 +16,13 @@ signals:
     void clicked();
 protected:
     void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 public:
     int x, y;
     QMouseEvent* ev;
+    QPoint origin;
+    QRubberBand* rubberBand;
 };
 
 #endif // CLICKABLELABEL

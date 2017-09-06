@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
         return -1;
     }
     imageViewer.show();
+    QObject::connect(&app, SIGNAL(aboutToQuit()), &imageViewer, SLOT(saveExit()));
     //imageViewer.showMaximized();
     return app.exec();
 }
